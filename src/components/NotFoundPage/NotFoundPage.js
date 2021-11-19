@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import GoBackButton from '../GoBackButton/GoBackButton';
+// import GoBackButton from '../GoBackButton/GoBackButton';
 
 import s from './NotFoundPage.module.css';
 
@@ -12,9 +12,9 @@ export default function NotFoundPage() {
         <Link to="/movies/603" className={s.goToMatrix}>
           Enter the Matrix
         </Link>
-        <Link to="/" className={s.goToList}>
+        {/* <Link to="/" className={s.goToList}>
           <GoBackButton />
-        </Link>
+        </Link> */}
 
         <div
           className={s.blur_back}

@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import Container from './Container/Container';
 import AppBar from './AppBar/AppBar';
@@ -29,27 +29,13 @@ export default function Phonebook() {
       <AppBar />
 
       <Suspense fallback={<Loader />}>
-        <Switch>
-          <Route path="/" exact>
-            <HomePage />
-          </Route>
-
-          <Route path="/register" exact>
-            <RegisterPage />
-          </Route>
-
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-
-          <Route path="/contacts">
-            <ContactsPage />
-          </Route>
-
-          <Route>
-            <NotFoundPage />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route path="/" exact element={<HomePage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/contacts" element={<ContactsPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
       </Suspense>
     </Container>
   );

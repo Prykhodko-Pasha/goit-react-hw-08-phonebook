@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Section from './Section/Section';
-import Form from './Form/Form';
-import Contacts from './Contacts/Contacts';
-import ContactsSearch from './ContactsSearch/ContactsSearch';
+import Section from '../Section/Section';
+import Form from '../Form/Form';
+import Contacts from '../Contacts/Contacts';
+import ContactsSearch from '../ContactsSearch/ContactsSearch';
 import Loader from '../Loader/Loader';
 
-import s from './Contacts/Contacts.module.css';
-import { getEntities, getLoading } from '../redux/selectors';
-import * as operations from '../redux/operations';
+import s from '../Contacts/Contacts.module.css';
+import { getEntities, getLoading } from '../../redux/selectors';
+import * as operations from '../../redux/operations';
 
 export default function HomePage() {
   const items = useSelector(getEntities);
