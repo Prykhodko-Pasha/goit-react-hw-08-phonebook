@@ -1,89 +1,160 @@
-import Avatar from '@mui/material/Avatar';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import DatePicker from '@mui/lab/DatePicker';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-export default function MovieDetailsPage() {
+export default function RegisterPage() {
+  const [name, setName] = useState('');
+  const [pass, setPass] = useState('');
+  const [showPass, setShowPass] = useState(false);
+  const [date, setDate] = useState(null);
+
+  const handleChange = e => {
+    const { name, value } = e.currentTarget;
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+      case 'pass':
+        setPass(value);
+        break;
+        break;
+      default:
+        return;
+    }
+  };
+
   const handleSubmit = event => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPass(!showPass);
+  };
+
+  const handleMouseDownPassword = event => {
+    event.preventDefault();
   };
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          textAlign: 'center',
+          border: '1px solid',
+          padding: '50px',
+          borderRadius: '40px',
+          position: 'relative',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Create your own room
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          noValidate
+          sx={{
+            mt: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
           <TextField
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="name"
+            label="Name"
+            name="name"
+            value={name}
             autoFocus
+            onChange={handleChange}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+
+          <FormControl sx={{ m: 1 }} variant="outlined" fullWidth>
+            <InputLabel htmlFor="outlined-adornment-password" required>
+              Password
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={showPass ? 'text' : 'password'}
+              name="pass"
+              value={pass}
+              onChange={handleChange}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPass ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+            />
+          </FormControl>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Party date"
+              // name="date"
+              value={date}
+              onChange={newDate => {
+                setDate(newDate);
+              }}
+              minDate={Date.now()}
+              renderInput={params => (
+                <TextField {...params} margin="normal" fullWidth required />
+              )}
+            />
+          </LocalizationProvider>
+
           <Button
             type="submit"
-            fullWidth
+            // fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            size="large"
+            sx={{
+              margin: '0 auto',
+              mt: 3,
+              mb: 2,
+              // backgroundColor: 'green',
+            }}
           >
-            Sign In
+            Create a room
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
+          <IconButton
+            aria-label="close"
+            sx={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              // p: 2,
+              // minWidth: 300,
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
         </Box>
       </Box>
     </Container>
