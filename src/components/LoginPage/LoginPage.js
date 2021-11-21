@@ -1,121 +1,138 @@
-// import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-// import { fetchMovieById } from '../../services/movies-api';
-// import Loader from '../Loader/Loader';
-// import MovieCard from '../MovieCard/MovieCard';
-import Avatar from '@mui/material/Avatar';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-export default function MovieDetailsPage() {
-  // const [movie, setMovie] = useState({});
-  // const [status, setStatus] = useState('idle');
-  // const [errorMessage, setErrorMessage] = useState('');
+export default function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+  const [showPass, setShowPass] = useState(false);
 
-  // const { movieId } = useParams();
-
-  // useEffect(() => {
-  //   setStatus('pending');
-
-  //   fetchMovieById(movieId)
-  //     .then(data => {
-  //       if (data.results === 0) {
-  //         setStatus('rejected');
-  //         setErrorMessage('Something gone wrong :(');
-  //       } else {
-  //         setMovie(data);
-  //         setStatus('resolved');
-  //       }
-  //     })
-  //     .catch(err => {
-  //       setStatus('rejected');
-  //       setErrorMessage(`There is an error: ${err}`);
-  //     });
-  // }, [movieId]);
+  const handleChange = e => {
+    const { name, value } = e.currentTarget;
+    switch (name) {
+      case 'email':
+        setEmail(value);
+        break;
+      case 'pass':
+        setPass(value);
+        break;
+      default:
+        return;
+    }
+  };
 
   const handleSubmit = event => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    //post
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPass(!showPass);
+  };
+
+  const handleMouseDownPassword = event => {
+    event.preventDefault();
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
+    <>
+      <Container
+        component="main"
+        maxWidth="xs"
         sx={{
-          marginTop: 8,
+          width: '100%',
+          height: '100%',
           display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+        <Box
+          sx={{
+            textAlign: 'center',
+            padding: '50px',
+            borderRadius: '40px',
+            position: 'relative',
+          }}
+        >
+          <Typography component="h1" variant="h5">
+            Login page
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{
+              mt: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
           >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email"
+              name="email"
+              value={email}
+              autoComplete="email"
+              onChange={handleChange}
+            />
+
+            <FormControl margin="normal" variant="outlined" fullWidth required>
+              <InputLabel htmlFor="outlined-adornment-password">
+                Password
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                type={showPass ? 'text' : 'password'}
+                name="pass"
+                value={pass}
+                onChange={handleChange}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPass ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password_"
+              />
+            </FormControl>
+
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              sx={{
+                margin: '0 auto',
+                mt: 3,
+                mb: 2,
+              }}
+            >
+              Login
+            </Button>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </>
   );
 }

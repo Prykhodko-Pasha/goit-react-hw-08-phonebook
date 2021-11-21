@@ -1,8 +1,9 @@
-.nav {
+.app_bar {
   display: flex;
+  justify-content: space-between;
 }
 
-.nav__link,
+/* .nav__link,
 .nav__link_active {
   margin: 15px;
   text-decoration: none;
@@ -20,4 +21,4 @@
 
 .nav__link_active {
   color: #596fe9;
-}
+} */
