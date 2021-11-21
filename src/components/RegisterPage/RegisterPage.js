@@ -13,14 +13,14 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import authOperations from '../../redux/auth/auth-operations';
+import * as authOperations from '../../redux/auth/auth-operations';
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
-  const [showPass, setShowPass] = useState(false);
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
@@ -31,8 +31,8 @@ export default function RegisterPage() {
       case 'email':
         setEmail(value);
         break;
-      case 'pass':
-        setPass(value);
+      case 'password':
+        setPassword(value);
         break;
       default:
         return;
@@ -41,14 +41,14 @@ export default function RegisterPage() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(authOperations.register({ name, email, pass }));
+    dispatch(authOperations.register({ name, email, password }));
     setName('');
     setEmail('');
-    setPass('');
+    setPassword('');
   };
 
   const handleClickShowPassword = () => {
-    setShowPass(!showPass);
+    setShowPassword(!showPassword);
   };
 
   const handleMouseDownPassword = e => {
@@ -120,9 +120,9 @@ export default function RegisterPage() {
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
-              type={showPass ? 'text' : 'password'}
-              name="pass"
-              value={pass}
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              value={password}
               onChange={handleChange}
               endAdornment={
                 <InputAdornment position="end">
@@ -132,7 +132,7 @@ export default function RegisterPage() {
                     onMouseDown={handleMouseDownPassword}
                     edge="end"
                   >
-                    {showPass ? <VisibilityOff /> : <Visibility />}
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
               }

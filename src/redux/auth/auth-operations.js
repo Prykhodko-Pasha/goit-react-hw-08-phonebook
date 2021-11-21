@@ -22,13 +22,13 @@ export const login = createAsyncThunk('auth/login', async credentials => {
   }
 });
 
-export const addContact = createAsyncThunk(actions.addContact, async data => {
-  const { name, phone } = data;
-  const contact = await addContactAPI(name, phone);
-  return contact;
-});
+// export const addContact = createAsyncThunk(actions.addContact, async data => {
+//   const { name, phone } = data;
+//   const contact = await addContactAPI(name, phone);
+//   return contact;
+// });
 
-export const delContact = createAsyncThunk(actions.delContact, async id => {
-  const contact = await delContactAPI(id);
-  return contact;
-});
+// export const delContact = createAsyncThunk(actions.delContact, async id => {
+//   const contact = await delContactAPI(id);
+//   return contact;
+// });
