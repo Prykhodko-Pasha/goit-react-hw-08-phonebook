@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
@@ -12,10 +13,13 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
+import * as authOperations from '../../redux/auth/auth-operations';
+
 export default function LoginPage() {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
-  const [showPass, setShowPass] = useState(false);
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
@@ -23,116 +27,116 @@ export default function LoginPage() {
       case 'email':
         setEmail(value);
         break;
-      case 'pass':
-        setPass(value);
+      case 'password':
+        setPassword(value);
         break;
       default:
         return;
     }
   };
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    //post
+  const handleSubmit = e => {
+    e.preventDefault();
+    dispatch(authOperations.login({ email, password }));
+    setEmail('');
+    setPassword('');
   };
 
   const handleClickShowPassword = () => {
-    setShowPass(!showPass);
+    setShowPassword(!showPassword);
   };
 
-  const handleMouseDownPassword = event => {
-    event.preventDefault();
+  const handleMouseDownPassword = e => {
+    e.preventDefault();
   };
 
   return (
-    <>
-      <Container
-        component="main"
-        maxWidth="xs"
+    <Container
+      component="main"
+      maxWidth="xs"
+      sx={{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Box
         sx={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          textAlign: 'center',
+          padding: '50px',
+          borderRadius: '40px',
+          position: 'relative',
         }}
       >
+        <Typography component="h1" variant="h5">
+          Login page
+        </Typography>
         <Box
+          component="form"
+          onSubmit={handleSubmit}
+          noValidate
           sx={{
-            textAlign: 'center',
-            padding: '50px',
-            borderRadius: '40px',
-            position: 'relative',
+            mt: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
-          <Typography component="h1" variant="h5">
-            Login page
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email"
+            name="email"
+            value={email}
+            autoComplete="email"
+            onChange={handleChange}
+          />
+
+          <FormControl margin="normal" variant="outlined" fullWidth required>
+            <InputLabel htmlFor="outlined-adornment-password">
+              Password
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              value={password}
+              onChange={handleChange}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password_"
+            />
+          </FormControl>
+
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
             sx={{
-              mt: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
+              margin: '0 auto',
+              mt: 3,
+              mb: 2,
             }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              value={email}
-              autoComplete="email"
-              onChange={handleChange}
-            />
-
-            <FormControl margin="normal" variant="outlined" fullWidth required>
-              <InputLabel htmlFor="outlined-adornment-password">
-                Password
-              </InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password"
-                type={showPass ? 'text' : 'password'}
-                name="pass"
-                value={pass}
-                onChange={handleChange}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPass ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password_"
-              />
-            </FormControl>
-
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              sx={{
-                margin: '0 auto',
-                mt: 3,
-                mb: 2,
-              }}
-            >
-              Login
-            </Button>
-          </Box>
+            Login
+          </Button>
         </Box>
-      </Container>
-    </>
+      </Box>
+    </Container>
   );
 }
