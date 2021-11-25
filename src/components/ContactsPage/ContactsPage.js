@@ -8,8 +8,11 @@ import ContactsSearch from '../ContactsSearch/ContactsSearch';
 import Loader from '../Loader/Loader';
 
 import s from '../Contacts/Contacts.module.css';
-import { getEntities, getLoading } from '../../redux/selectors';
-import * as operations from '../../redux/operations';
+import {
+  getEntities,
+  getLoading,
+} from '../../redux/contacts/contacts-selectors';
+import * as operations from '../../redux/contacts/contacts-operations';
 
 export default function HomePage() {
   const items = useSelector(getEntities);

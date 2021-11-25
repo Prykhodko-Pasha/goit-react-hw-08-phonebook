@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import s from './Form.module.css';
-import * as operations from '../../redux/operations';
-import { getEntities } from '../../redux/selectors';
+import * as operations from '../../redux/contacts/contacts-operations';
+import { getEntities } from '../../redux/contacts/contacts-selectors';
 
 export default function Form() {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [number, setNumber] = useState('');
   const items = useSelector(getEntities);
   const dispatch = useDispatch();
 
@@ -16,8 +16,8 @@ export default function Form() {
       case 'name':
         setName(value);
         break;
-      case 'phone':
-        setPhone(value);
+      case 'number':
+        setNumber(value);
         break;
       default:
         return;
@@ -30,7 +30,8 @@ export default function Form() {
       item => item.name.toLowerCase() === name.toLowerCase(),
     );
     if (isContactExist.length === 0) {
-      dispatch(operations.addContact({ name, phone }));
+      console.log(name, number);
+      dispatch(operations.addContact({ name, number }));
     } else {
       alert(`${name} is already in contacts.`);
     }
@@ -40,7 +41,7 @@ export default function Form() {
 
   const reset = () => {
     setName('');
-    setPhone('');
+    setNumber('');
   };
 
   return (
@@ -61,9 +62,9 @@ export default function Form() {
       <label>
         <input
           type="tel"
-          name="phone"
+          name="number"
           placeholder="Number"
-          value={phone}
+          value={number}
           onChange={onChange}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"

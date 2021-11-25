@@ -6,17 +6,18 @@ export default function Navigation() {
     <nav className={s.nav}>
       <NavLink
         to="/"
-        exact
-        className={s.nav__link}
-        activeClassName={s.nav__link_active}
+        className={({ isActive }) =>
+          isActive ? s.nav__link_active : s.nav__link
+        }
       >
         Home
       </NavLink>
 
       <NavLink
         to="/contacts"
-        className={s.nav__link}
-        activeClassName={s.nav__link_active}
+        className={({ isActive }) =>
+          isActive ? s.nav__link_active : s.nav__link
+        }
       >
         Contacts
       </NavLink>

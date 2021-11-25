@@ -6,17 +6,18 @@ export default function AuthNav() {
     <nav className={s.nav}>
       <NavLink
         to="/register"
-        exact
-        className={s.nav__link}
-        activeClassName={s.nav__link_active}
+        className={({ isActive }) =>
+          isActive ? s.nav__link_active : s.nav__link
+        }
       >
         Sign in
       </NavLink>
 
       <NavLink
         to="/login"
-        className={s.nav__link}
-        activeClassName={s.nav__link_active}
+        className={({ isActive }) =>
+          isActive ? s.nav__link_active : s.nav__link
+        }
       >
         Login
       </NavLink>

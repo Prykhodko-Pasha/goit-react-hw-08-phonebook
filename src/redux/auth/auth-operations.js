@@ -21,6 +21,7 @@ export const register = createAsyncThunk('auth/register', async credentials => {
     console.log(error);
   }
 });
+
 export const login = createAsyncThunk('auth/login', async credentials => {
   try {
     const { data } = await axios.post('/users/login', credentials);
@@ -30,6 +31,7 @@ export const login = createAsyncThunk('auth/login', async credentials => {
     console.log(error);
   }
 });
+
 export const logout = createAsyncThunk('auth/logout', async () => {
   try {
     await axios.post('/users/logout');
@@ -38,14 +40,16 @@ export const logout = createAsyncThunk('auth/logout', async () => {
     console.log(error);
   }
 });
+export const refresh = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
+  const state = thunkAPI.getState();
+  const persistedToken = state.auth.token;
+  if (persistedToken === null) return thunkAPI.rejectWithValue();
 
-// export const addContact = createAsyncThunk(actions.addContact, async data => {
-//   const { name, phone } = data;
-//   const contact = await addContactAPI(name, phone);
-//   return contact;
-// });
-
-// export const delContact = createAsyncThunk(actions.delContact, async id => {
-//   const contact = await delContactAPI(id);
-//   return contact;
-// });
+  token.set(persistedToken);
+  try {
+    const { data } = await axios.get('/users/current');
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+});

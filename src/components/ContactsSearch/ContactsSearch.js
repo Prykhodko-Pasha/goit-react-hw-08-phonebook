@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import s from '../Contacts/Contacts.module.css';
-import * as actions from '../../redux/actions';
-import { getFilter } from '../../redux/selectors';
+import * as actions from '../../redux/contacts/contacts-actions';
+import { getFilter } from '../../redux/contacts/contacts-selectors';
 
 export default function ContactsSearch() {
   const value = useSelector(getFilter);
