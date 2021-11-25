@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
 
 import * as authOperations from '../../redux/auth/auth-operations';
 import { getUserName } from '../../redux/auth/auth-selectors';
@@ -42,12 +43,17 @@ export default function UserMenu() {
   }
 
   return (
-    <div className={s.nav}>
-      <Avatar {...stringAvatar(name)} />
-      <span>Hello, {name}!</span>
-      <button type="button" onClick={() => dispatch(authOperations.logout())}>
+    <div className={s.user_menu}>
+      <Avatar {...stringAvatar(name)} className={s.user_menu__avatar} />
+      <span className={s.user_menu__greeting}>Hello, {name}!</span>
+      <Button
+        className={s.user_menu__button}
+        variant="outlined"
+        color="error"
+        onClick={() => dispatch(authOperations.logout())}
+      >
         Logout
-      </button>
+      </Button>
     </div>
   );
 }

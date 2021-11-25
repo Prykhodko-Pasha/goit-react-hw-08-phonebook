@@ -89,6 +89,7 @@ export default function LoginPage() {
             margin="normal"
             required
             fullWidth
+            autoFocus
             id="email"
             label="Email"
             name="email"
